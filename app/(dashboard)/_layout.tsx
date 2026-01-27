@@ -4,9 +4,8 @@ import React from "react";
 
 const tabs = [
   { name: "home", title: "Home", icon: "home" },
-  { name: "tasks", title: "Tabs", icon: "list" },
   { name: "cart", title: "Cart", icon: "shopping-cart" },
-  { name: "news", title: "News", icon: "article" },
+  { name: "category", title: "Categories", icon: "article" },
   { name: "profile", title: "Profile", icon: "person" },
 ] as const;
 // DRY - Don't Repeat Yourself
@@ -35,28 +34,4 @@ const DashboardLayout = () => {
 
 export default DashboardLayout;
 
-{
-  /* <Tabs.Screen
-        name="home"
-        options={{
-          title: "Home",
-          //   data
-          // const color = data.color
-          // const { color } = data
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="home-filled" color={color} size={size} />
-          )
-        }}
-      />
-      <Tabs.Screen
-        name="tasks"
-        options={{
-          title: "Tasks",
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="home-filled" color={color} size={size} />
-          )
-        }}
-      />
-      <Tabs.Screen name="news" options={{ title: "News" }} />
-      <Tabs.Screen name="profile" options={{ title: "Profile" }} /> */
-}
+

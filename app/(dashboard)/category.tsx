@@ -39,7 +39,7 @@ const chocolateCategories = [
   },
 ];
 
-const News = () => {
+const Category = () => {
   const router = useRouter();
 
   return (
@@ -121,4 +121,4 @@ const CategoryCard = ({
   );
 };
 
-export default News;
+export default Category;
