@@ -1,4 +1,5 @@
 import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "expo-router";
 import React from "react";
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
 
@@ -143,6 +144,7 @@ const chocolateCategories = [
 
 const Home = () => {
   const { user } = useAuth();
+  const router = useRouter();
   const firstName =
     user?.displayName?.split(" ")[0] ||
     user?.email?.split("@")[0] ||
@@ -244,7 +246,7 @@ const Home = () => {
               Seasonal collections
             </Text>
           </View>
-          <Pressable>
+          <Pressable onPress={() => router.push("/collections")}>
             <Text className="text-sm font-semibold text-[#7b3c1d]">
               View all
             </Text>
@@ -319,7 +321,11 @@ const Home = () => {
         </Text>
         <View className="mt-6 gap-4">
           {chocolateCategories.map((category) => (
-            <CategoryCard key={category.title} category={category} />
+            <CategoryCard
+              key={category.title}
+              category={category}
+              onPress={() => router.push("/categories")}
+            />
           ))}
         </View>
       </View>
@@ -446,7 +452,13 @@ const TestimonialCard = ({ story }: { story: Story }) => {
 
 type Category = (typeof chocolateCategories)[number];
 
-const CategoryCard = ({ category }: { category: Category }) => {
+const CategoryCard = ({
+  category,
+  onPress,
+}: {
+  category: Category;
+  onPress?: () => void;
+}) => {
   return (
     <View
       className="rounded-3xl p-5 shadow-md"
@@ -461,7 +473,10 @@ const CategoryCard = ({ category }: { category: Category }) => {
       <Text className="mt-3 text-base leading-6 text-[#f2dec7]">
         {category.description}
       </Text>
-      <Pressable className="mt-4 self-start rounded-2xl bg-white/15 px-4 py-2">
+      <Pressable
+        className="mt-4 self-start rounded-2xl bg-white/15 px-4 py-2"
+        onPress={onPress}
+      >
         <Text className="text-sm font-semibold text-white">View flavors</Text>
       </Pressable>
     </View>
