@@ -1,24 +1,33 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { View, Text } from "react-native"
+import React from "react"
+import { Slot } from "expo-router"
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context"
+import { LoaderProvider } from "@/context/LoaderContext"
+import { AuthProvider } from "@/context/AuthContext"
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+// SafeAreaView from react-native is deprecated
+// react-native-safe-area-context is the recommended alternative
+// It provides safe gaps on top, left, right, and bottom of the screen
 
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
-
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
+// Like App.tsx
+const RootLayout = () => {
+  const insets = useSafeAreaInsets()
+  // / device safe area values (top, left, right, and bottom)
+  console.log(insets)
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+    <LoaderProvider>
+      <AuthProvider>
+        <View className="flex-1" style={{ marginTop: insets.top }}>
+          {/* Slot renders the currently active screen */}
+          <Slot />
+        </View>
+      </AuthProvider>
+    </LoaderProvider>
+    // <SafeAreaView className="flex-1">
+    // {/* Slot renders the currently active screen */}
+    // <Slot />
+    // </SafeAreaView>
+  )
 }
+
+export default RootLayout
