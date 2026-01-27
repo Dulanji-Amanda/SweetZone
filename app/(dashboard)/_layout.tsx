@@ -1,21 +1,22 @@
-import React from "react"
-import { Tabs } from "expo-router"
-import { MaterialIcons, AntDesign } from "@expo/vector-icons"
+import { MaterialIcons } from "@expo/vector-icons";
+import { Tabs } from "expo-router";
+import React from "react";
 
 const tabs = [
   { name: "home", title: "Home", icon: "home" },
   { name: "tasks", title: "Tabs", icon: "list" },
+  { name: "cart", title: "Cart", icon: "shopping-cart" },
   { name: "news", title: "News", icon: "article" },
-  { name: "profile", title: "Profile", icon: "person" }
-] as const
+  { name: "profile", title: "Profile", icon: "person" },
+] as const;
 // DRY - Don't Repeat Yourself
 const DashboardLayout = () => {
   return (
     <Tabs
       screenOptions={{
-        headerShown: false
+        headerShown: false,
       }}
-    //   tabBar={(prop) => <></>}
+      //   tabBar={(prop) => <></>}
     >
       {tabs.map(({ name, title, icon }: any) => (
         <Tabs.Screen
@@ -24,15 +25,15 @@ const DashboardLayout = () => {
             title: title,
             tabBarIcon: ({ color, size }) => (
               <MaterialIcons name={icon} color={color} size={size} />
-            )
+            ),
           }}
         />
       ))}
     </Tabs>
-  )
-}
+  );
+};
 
-export default DashboardLayout
+export default DashboardLayout;
 
 {
   /* <Tabs.Screen
