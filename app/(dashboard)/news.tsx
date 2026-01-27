@@ -1,9 +1,10 @@
 import { useRouter } from "expo-router";
-import React from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 
 const palette = {
   background: "#fbf7f2",
+  accent: "#a6683f",
+  dark: "#2b140a",
 };
 
 const chocolateCategories = [
@@ -39,7 +40,7 @@ const chocolateCategories = [
   },
 ];
 
-const Category = () => {
+const News = () => {
   const router = useRouter();
 
   return (
@@ -121,4 +122,4 @@ const CategoryCard = ({
   );
 };
 
-export default Category;
+export default News;
