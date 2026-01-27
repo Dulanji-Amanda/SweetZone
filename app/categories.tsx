@@ -17,16 +17,16 @@ const chocolateCatalog = [
     hue: "#2b140a",
     items: [
       {
-        name: "Midnight Sea Salt",
+        name: "Cacao Chip Snap",
         description: "72% cacao dough, smoked salt, and burnt sugar chips.",
         price: 18,
-        image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       },
       {
-        name: "Hazelnut Crumble",
-        description: "Dark chocolate base studded with caramelized hazelnuts.",
+        name: "White Velvet Bite",
+        description: "White chocolate base studded with caramelized hazelnuts.",
         price: 16,
-        image: "https://images.unsplash.com/photo-1481391032119-d89fee407e44?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1619149651177-b09092806f1a?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       }
     ]
   },
@@ -36,16 +36,16 @@ const chocolateCatalog = [
     hue: "#4a2414",
     items: [
       {
-        name: "Amber Opera",
+        name: "Mocha Mousse Cake",
         description: "Espresso jaconde, amber caramel, and cocoa mirror glaze.",
         price: 42,
-        image: "https://images.unsplash.com/photo-1461009209120-103742b534e2?auto=format&fit=crop&w=800&q=80"
+        image: "https://plus.unsplash.com/premium_photo-1723618822165-0b13c0471fc4?q=80&w=708&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       },
       {
         name: "Rosewood Gateau",
         description: "Light brown sugar sponge layered with rose ganache.",
         price: 38,
-        image: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&q=80"
+        image: "https://plus.unsplash.com/premium_photo-1713920190025-79fb720f3ee1?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       }
     ]
   },
@@ -55,16 +55,16 @@ const chocolateCatalog = [
     hue: "#3b1d0f",
     items: [
       {
-        name: "Andes Dawn",
-        description: "70% Peru cacao with candied orange and cacao nibs.",
+        name: "Hazelnut Praline",
+        description: " 72% dark chocolate with crushed caramelized hazelnuts.",
         price: 14,
-        image: "https://images.unsplash.com/photo-1495147334217-fcb3445babd5?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1618320362989-d8a9eb2a1e52?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       },
       {
         name: "Ivory Pistachio",
         description: "White chocolate with roasted pistachios and rose petal.",
         price: 16,
-        image: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&q=80"
+        image: "https://plus.unsplash.com/premium_photo-1673138930008-64cdecb37a95?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       }
     ]
   },
@@ -74,16 +74,16 @@ const chocolateCatalog = [
     hue: "#1f130c",
     items: [
       {
-        name: "Aztec Ember",
+        name: "Spiced Sipping Chocolate",
         description: "Spiced dark sipping chocolate with smoked chili oil.",
         price: 12,
-        image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1577805947697-89e18249d767?q=80&w=698&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       },
       {
         name: "Cacao Cold Brew",
         description: "Nitro-infused cacao tea with Ethiopian coffee concentrate.",
         price: 10,
-        image: "https://images.unsplash.com/photo-1521302080372-9a22dd087495?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1517578239113-b03992dcdd25?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       }
     ]
   },
@@ -96,13 +96,13 @@ const chocolateCatalog = [
         name: "Lavender Honey",
         description: "Milk chocolate ganache infused with lavender nectar.",
         price: 24,
-        image: "https://images.unsplash.com/photo-1481391032119-d89fee407e44?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1706147601212-9c6ac9bfff5e?q=80&w=1073&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D0"
       },
       {
-        name: "Citrus Noir",
+        name: "Yuzu Cacao",
         description: "Dark ganache with candied yuzu and cacao fruit jelly.",
         price: 26,
-        image: "https://images.unsplash.com/photo-1511376777868-611b54f68947?auto=format&fit=crop&w=800&q=80"
+        image: "https://plus.unsplash.com/premium_photo-1667031519185-3dad7d8931cd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       }
     ]
   }
