@@ -109,39 +109,6 @@ const guestStories = [
   },
 ];
 
-const chocolateCategories = [
-  {
-    title: "Chocolate Cookies",
-    description:
-      "Soft bites loaded with 72% cacao chunks, cacao nib dust, and smoked salt.",
-    color: "#2b140a",
-  },
-  {
-    title: "Chocolate Cakes",
-    description:
-      "Layered tortes with light brown sugar sponge and dark ganache ribbons.",
-    color: "#592c1a",
-  },
-  {
-    title: "Chocolate Bars",
-    description:
-      "Limited-edition tablets with roasted pistachio, citrus peel, and edible petals.",
-    color: "#3b1d0f",
-  },
-  {
-    title: "Chocolate Drinks",
-    description:
-      "Single-origin sipping chocolate, cacao cold brew, and nitro cocoa tonics.",
-    color: "#1f130c",
-  },
-  {
-    title: "Chocolate Truffles",
-    description:
-      "Hand-rolled pralines with Tahitian vanilla cream and caramelized hazelnuts.",
-    color: "#4e2a1b",
-  },
-];
-
 const Home = () => {
   const { user } = useAuth();
   const router = useRouter();
@@ -314,24 +281,6 @@ const Home = () => {
 
       <View className="mt-12 px-6">
         <Text className="text-sm uppercase tracking-[0.4em] text-[#a6683f]">
-          Chocolate Varieties
-        </Text>
-        <Text className="mt-2 text-3xl font-bold text-[#1e1009]">
-          Curated categories to explore
-        </Text>
-        <View className="mt-6 gap-4">
-          {chocolateCategories.map((category) => (
-            <CategoryCard
-              key={category.title}
-              category={category}
-              onPress={() => router.push("/categories")}
-            />
-          ))}
-        </View>
-      </View>
-
-      <View className="mt-12 px-6">
-        <Text className="text-sm uppercase tracking-[0.4em] text-[#a6683f]">
           Guest Stories
         </Text>
         <Text className="mt-2 text-3xl font-bold text-[#1e1009]">
@@ -446,39 +395,6 @@ const TestimonialCard = ({ story }: { story: Story }) => {
       <Text className="mt-4 text-base leading-6 text-[#f3dfc8]">
         “{story.quote}”
       </Text>
-    </View>
-  );
-};
-
-type Category = (typeof chocolateCategories)[number];
-
-const CategoryCard = ({
-  category,
-  onPress,
-}: {
-  category: Category;
-  onPress?: () => void;
-}) => {
-  return (
-    <View
-      className="rounded-3xl p-5 shadow-md"
-      style={{ backgroundColor: category.color }}
-    >
-      <Text className="text-sm uppercase tracking-[0.3em] text-[#f4e4d4]/80">
-        Signature Style
-      </Text>
-      <Text className="mt-2 text-2xl font-semibold text-white">
-        {category.title}
-      </Text>
-      <Text className="mt-3 text-base leading-6 text-[#f2dec7]">
-        {category.description}
-      </Text>
-      <Pressable
-        className="mt-4 self-start rounded-2xl bg-white/15 px-4 py-2"
-        onPress={onPress}
-      >
-        <Text className="text-sm font-semibold text-white">View flavors</Text>
-      </Pressable>
     </View>
   );
 };
