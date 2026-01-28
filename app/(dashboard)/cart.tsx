@@ -7,6 +7,7 @@ import {
     Pressable,
     ScrollView,
     Text,
+    TextInput,
     View,
 } from "react-native";
 import MapView, { LongPressEvent, Marker, Region } from "react-native-maps";
@@ -66,6 +67,8 @@ const Cart = () => {
   const [selectedAddress, setSelectedAddress] = useState<string>("");
   const [isLocating, setIsLocating] = useState(false);
   const [permissionDenied, setPermissionDenied] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -168,6 +171,47 @@ const Cart = () => {
     }
   };
 
+  const handleSearchLocation = async () => {
+    if (!searchQuery.trim()) {
+      Alert.alert(
+        "Add an address",
+        "Enter a neighborhood, city, or landmark to search.",
+      );
+      return;
+    }
+
+    try {
+      setIsSearching(true);
+      const results = await Location.geocodeAsync(searchQuery.trim());
+      if (!results.length) {
+        Alert.alert(
+          "Location not found",
+          "Try refining the address for better accuracy.",
+        );
+        return;
+      }
+
+      const { latitude, longitude } = results[0];
+      const coords: Coordinate = { latitude, longitude };
+      const region: Region = {
+        ...coords,
+        latitudeDelta: 0.02,
+        longitudeDelta: 0.02,
+      };
+      setMapRegion(region);
+      setSelectedCoords(coords);
+      await fetchAddress(coords);
+    } catch (error) {
+      console.warn("Search geocode failed", error);
+      Alert.alert(
+        "Search failed",
+        "We couldn't reach the geocoding service. Try again shortly.",
+      );
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
   const locationSummary = selectedCoords
     ? selectedAddress ||
       `Lat ${selectedCoords.latitude.toFixed(3)}, Lon ${selectedCoords.longitude.toFixed(3)}`
@@ -245,6 +289,28 @@ const Cart = () => {
           Long-press anywhere on the map to drop a pin, or use your current
           position for courier routing.
         </Text>
+        <View className="mt-4 flex-row gap-3">
+          <TextInput
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            placeholder="Search for an address or landmark"
+            placeholderTextColor="#b78c6c"
+            className="flex-1 rounded-2xl border border-[#ead7c0] bg-white px-4 py-3 text-base text-[#1f130c]"
+          />
+          <Pressable
+            className="rounded-2xl bg-[#d6b28c] px-4 py-3"
+            onPress={handleSearchLocation}
+            disabled={isSearching}
+          >
+            {isSearching ? (
+              <ActivityIndicator color="#2b140a" />
+            ) : (
+              <Text className="text-base font-semibold text-[#2b140a]">
+                Search
+              </Text>
+            )}
+          </Pressable>
+        </View>
         <View className="mt-4 overflow-hidden rounded-3xl border border-[#ead7c0]/80 bg-white">
           <MapView
             style={{ height: 280, width: "100%" }}
