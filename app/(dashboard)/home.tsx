@@ -174,6 +174,34 @@ const Home = () => {
         </View>
       </View>
 
+      
+      <View className="mt-12 px-6">
+        <View className="flex-row items-center justify-between">
+          <View>
+            <Text className="text-sm uppercase tracking-[0.4em] text-[#a6683f]">
+              Curations
+            </Text>
+            <Text className="mt-2 text-3xl font-bold text-[#1e1009]">
+              Seasonal collections
+            </Text>
+          </View>
+          <Pressable onPress={() => router.push("/collections")}>
+            <Text className="text-sm font-semibold text-[#7b3c1d]">
+              View all
+            </Text>
+          </Pressable>
+        </View>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          className="mt-6"
+          contentContainerStyle={{ gap: 16 }}
+        >
+          {curatedCollections.map((collection) => (
+            <CollectionCard key={collection.title} item={collection} />
+          ))}
+        </ScrollView>
+      </View>
       <View className="mt-10 px-6">
         <Text className="text-sm font-semibold uppercase tracking-[0.4em] text-[#a6683f]">
           Signature Craft
@@ -202,35 +230,7 @@ const Home = () => {
           ))}
         </View>
       </View>
-
-      <View className="mt-12 px-6">
-        <View className="flex-row items-center justify-between">
-          <View>
-            <Text className="text-sm uppercase tracking-[0.4em] text-[#a6683f]">
-              Curations
-            </Text>
-            <Text className="mt-2 text-3xl font-bold text-[#1e1009]">
-              Seasonal collections
-            </Text>
-          </View>
-          <Pressable onPress={() => router.push("/collections")}>
-            <Text className="text-sm font-semibold text-[#7b3c1d]">
-              View all
-            </Text>
-          </Pressable>
-        </View>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          className="mt-6"
-          contentContainerStyle={{ gap: 16 }}
-        >
-          {curatedCollections.map((collection) => (
-            <CollectionCard key={collection.title} item={collection} />
-          ))}
-        </ScrollView>
-      </View>
-
+      
       <View className="mt-12 px-6">
         <View className="rounded-3xl bg-[#1f130c] p-6">
           <Text className="text-xs uppercase tracking-[0.3em] text-[#d8bda1]">
@@ -344,7 +344,7 @@ const CollectionCard = ({ item }: { item: Collection }) => {
       </Text>
       <Pressable className="mt-4 rounded-2xl border border-[#d6b28c] py-2">
         <Text className="text-center text-sm font-semibold text-[#7b3c1d]">
-          Add to ritual
+          Add to cart
         </Text>
       </Pressable>
     </View>
