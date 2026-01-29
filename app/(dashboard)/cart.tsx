@@ -1,5 +1,6 @@
+import { useCart } from "@/hooks/useCart";
 import * as Location from "expo-location";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
     ActivityIndicator,
@@ -39,20 +40,8 @@ type Coordinate = {
 
 const Cart = () => {
   const router = useRouter();
-  const params = useLocalSearchParams<{
-    name?: string;
-    price?: string;
-    description?: string;
-    image?: string;
-  }>();
-  const productName = typeof params.name === "string" ? params.name : "";
-  const productDescription =
-    typeof params.description === "string" ? params.description : "";
-  const productImage =
-    typeof params.image === "string" ? params.image : undefined;
-  const unitPrice = params.price ? Number(params.price) : 0;
+  const { items, updateQuantity, removeFromCart, subtotal, clearCart } = useCart();
 
-  const [quantity, setQuantity] = useState(1);
   const [mapRegion, setMapRegion] = useState<Region>(defaultRegion);
   const [selectedCoords, setSelectedCoords] = useState<Coordinate | null>(null);
   const [selectedAddress, setSelectedAddress] = useState<string>("");
@@ -61,14 +50,9 @@ const Cart = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
 
-  const hasItem = Boolean(productName && unitPrice > 0);
-  const subtotal = hasItem ? unitPrice * quantity : 0;
-  const deliveryFee = hasItem ? shippingFee : 0;
+  const hasItems = items.length > 0;
+  const deliveryFee = hasItems ? shippingFee : 0;
   const total = subtotal + deliveryFee;
-
-  useEffect(() => {
-    setQuantity(1);
-  }, [unitPrice, productName]);
 
   useEffect(() => {
     let isMounted = true;
@@ -212,8 +196,10 @@ const Cart = () => {
     }
   };
 
-  const handleAdjustQuantity = (delta: number) => {
-    setQuantity((prev) => Math.max(1, prev + delta));
+  const handleAdjustQuantity = (id: string, delta: number, current: number) => {
+    const nextQuantity = current + delta;
+    if (nextQuantity < 1) return;
+    updateQuantity(id, nextQuantity);
   };
 
   const locationSummary = selectedCoords
@@ -222,7 +208,7 @@ const Cart = () => {
     : "No delivery location selected yet.";
 
   const handlePlaceOrder = () => {
-    if (!hasItem) {
+    if (!hasItems) {
       Alert.alert(
         "Add a dessert",
         "Select an item to purchase before placing an order.",
@@ -238,7 +224,12 @@ const Cart = () => {
       return;
     }
 
-    Alert.alert("Order confirmed", "Your SweetZone creations are on the way.");
+    Alert.alert("Order confirmed", "Your SweetZone creations are on the way.", [
+      {
+        text: "Done",
+        onPress: () => clearCart(),
+      },
+    ]);
   };
 
   return (
@@ -260,67 +251,68 @@ const Cart = () => {
       </View>
 
       <View className="mt-8 px-6">
-        {hasItem ? (
-          <View
-            className="flex-row rounded-3xl bg-white p-4 shadow-md"
-            style={{ borderColor: palette.border, borderWidth: 1 }}
-          >
-            {productImage ? (
-              <Image
-                source={{ uri: productImage }}
-                className="h-24 w-24 rounded-2xl"
-                resizeMode="cover"
-              />
-            ) : (
-              <View className="h-24 w-24 items-center justify-center rounded-2xl bg-[#f4e4d4]">
-                <Text className="text-xs uppercase tracking-[0.3em] text-[#7b3c1d]">
-                  Sweet
-                </Text>
-              </View>
-            )}
-            <View className="ml-4 flex-1">
-              <Text className="text-lg font-semibold text-[#2b140a]">
-                {productName}
-              </Text>
-              <Text className="mt-1 text-sm text-[#5c3a23]">
-                {productDescription}
-              </Text>
-              <View className="mt-3 flex-row items-center justify-between">
-                <View className="flex-row items-center gap-3">
-                  <Pressable
-                    className="h-9 w-9 items-center justify-center rounded-full border border-[#ead7c0]"
-                    onPress={() => handleAdjustQuantity(-1)}
-                    disabled={quantity === 1}
-                  >
-                    <Text
-                      className={`text-lg font-semibold ${quantity === 1 ? "text-[#c9b6a5]" : "text-[#1f130c]"}`}
-                    >
-                      -
+        {hasItems ? (
+          <View className="gap-4">
+            {items.map((item) => (
+              <View
+                key={item.id}
+                className="flex-row rounded-3xl bg-white p-4 shadow-md"
+                style={{ borderColor: palette.border, borderWidth: 1 }}
+              >
+                <Pressable
+                  className="absolute right-3 top-3 h-8 w-8 items-center justify-center rounded-full bg-black/5"
+                  onPress={() => removeFromCart(item.id)}
+                >
+                  <Text className="text-base font-semibold text-[#7b3c1d]">x</Text>
+                </Pressable>
+                {item.image ? (
+                  <Image
+                    source={{ uri: item.image }}
+                    className="h-24 w-24 rounded-2xl"
+                    resizeMode="cover"
+                  />
+                ) : (
+                  <View className="h-24 w-24 items-center justify-center rounded-2xl bg-[#f4e4d4]">
+                    <Text className="text-xs uppercase tracking-[0.3em] text-[#7b3c1d]">
+                      Sweet
                     </Text>
-                  </Pressable>
-                  <Text className="text-base font-semibold text-[#1f130c]">
-                    {quantity}
-                  </Text>
-                  <Pressable
-                    className="h-9 w-9 items-center justify-center rounded-full border border-[#ead7c0]"
-                    onPress={() => handleAdjustQuantity(1)}
-                  >
-                    <Text className="text-lg font-semibold text-[#1f130c]">
-                      +
+                  </View>
+                )}
+                <View className="ml-4 flex-1 pr-6">
+                  <Text className="text-lg font-semibold text-[#2b140a]">{item.name}</Text>
+                  <Text className="mt-1 text-sm text-[#5c3a23]">{item.description}</Text>
+                  <View className="mt-3 flex-row items-center justify-between">
+                    <View className="flex-row items-center gap-3">
+                      <Pressable
+                        className="h-9 w-9 items-center justify-center rounded-full border border-[#ead7c0]"
+                        onPress={() => handleAdjustQuantity(item.id, -1, item.quantity)}
+                        disabled={item.quantity === 1}
+                      >
+                        <Text
+                          className={`text-lg font-semibold ${item.quantity === 1 ? "text-[#c9b6a5]" : "text-[#1f130c]"}`}
+                        >
+                          -
+                        </Text>
+                      </Pressable>
+                      <Text className="text-base font-semibold text-[#1f130c]">{item.quantity}</Text>
+                      <Pressable
+                        className="h-9 w-9 items-center justify-center rounded-full border border-[#ead7c0]"
+                        onPress={() => handleAdjustQuantity(item.id, 1, item.quantity)}
+                      >
+                        <Text className="text-lg font-semibold text-[#1f130c]">+</Text>
+                      </Pressable>
+                    </View>
+                    <Text className="text-base font-semibold text-[#1f130c]">
+                      {formatINR(item.price * item.quantity)}
                     </Text>
-                  </Pressable>
+                  </View>
                 </View>
-                <Text className="text-base font-semibold text-[#1f130c]">
-                  {formatINR(unitPrice * quantity)}
-                </Text>
               </View>
-            </View>
+            ))}
           </View>
         ) : (
           <View className="rounded-3xl border border-dashed border-[#ead7c0] bg-white p-6">
-            <Text className="text-lg font-semibold text-[#2b140a]">
-              Your cart is calm.
-            </Text>
+            <Text className="text-lg font-semibold text-[#2b140a]">Your cart is calm.</Text>
             <Text className="mt-1 text-sm text-[#5c3a23]">
               Tap “Add to cart” on any dessert to curate your tasting flight.
             </Text>
@@ -328,9 +320,7 @@ const Cart = () => {
               className="mt-4 self-start rounded-2xl bg-[#1f130c] px-4 py-2"
               onPress={() => router.push("/collections")}
             >
-              <Text className="text-sm font-semibold text-white">
-                Browse collections
-              </Text>
+              <Text className="text-sm font-semibold text-white">Browse collections</Text>
             </Pressable>
           </View>
         )}
@@ -418,7 +408,7 @@ const Cart = () => {
         </View>
       </View>
 
-      {hasItem && (
+      {hasItems && (
         <View className="mt-10 px-6">
           <View className="rounded-3xl bg-[#120b07] p-5">
             <View className="flex-row items-center justify-between">

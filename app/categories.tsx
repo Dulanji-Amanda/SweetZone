@@ -1,6 +1,7 @@
+import { useCart } from "@/hooks/useCart";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import { Alert, Image, Pressable, ScrollView, Text, View } from "react-native";
 
 const palette = {
   background: "#fbf7f2",
@@ -123,19 +124,22 @@ const chocolateCatalog = [
 
 const Categories = () => {
   const router = useRouter();
+  const { addToCart } = useCart();
 
   const handleAddToCart = (
     item: (typeof chocolateCatalog)[number]["items"][number],
   ) => {
-    router.push({
-      pathname: "/(dashboard)/cart",
-      params: {
-        name: item.name,
-        description: item.description,
-        price: String(item.price),
-        image: item.image,
-      },
+    addToCart({
+      name: item.name,
+      description: item.description,
+      price: item.price,
+      image: item.image,
     });
+
+    Alert.alert("Added to cart", `${item.name} joined your tasting cart.`, [
+      { text: "Keep browsing", style: "cancel" },
+      { text: "Go to cart", onPress: () => router.push("/(dashboard)/cart") },
+    ]);
   };
 
   return (

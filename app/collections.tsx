@@ -1,6 +1,7 @@
+import { useCart } from "@/hooks/useCart";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import { Alert, Image, Pressable, ScrollView, Text, View } from "react-native";
 
 const palette = {
   background: "#fbf7f2",
@@ -83,19 +84,22 @@ const seasonalCollections = [
 
 const Collections = () => {
   const router = useRouter();
+  const { addToCart } = useCart();
 
   const handleAddToCart = (
     collection: (typeof seasonalCollections)[number],
   ) => {
-    router.push({
-      pathname: "/(dashboard)/cart",
-      params: {
-        name: collection.title,
-        description: collection.description,
-        price: String(collection.price),
-        image: collection.image,
-      },
+    addToCart({
+      name: collection.title,
+      description: collection.description,
+      price: collection.price,
+      image: collection.image,
     });
+
+    Alert.alert("Added to cart", `${collection.title} is ready for checkout.`, [
+      { text: "Keep browsing", style: "cancel" },
+      { text: "Go to cart", onPress: () => router.push("/(dashboard)/cart") },
+    ]);
   };
 
   return (

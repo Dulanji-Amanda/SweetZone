@@ -4,6 +4,7 @@ import { Slot } from "expo-router"
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context"
 import { LoaderProvider } from "@/context/LoaderContext"
 import { AuthProvider } from "@/context/AuthContext"
+import { CartProvider } from "@/context/CartContext"
 
 // SafeAreaView from react-native is deprecated
 // react-native-safe-area-context is the recommended alternative
@@ -17,10 +18,12 @@ const RootLayout = () => {
   return (
     <LoaderProvider>
       <AuthProvider>
-        <View className="flex-1" style={{ marginTop: insets.top }}>
-          {/* Slot renders the currently active screen */}
-          <Slot />
-        </View>
+        <CartProvider>
+          <View className="flex-1" style={{ marginTop: insets.top }}>
+            {/* Slot renders the currently active screen */}
+            <Slot />
+          </View>
+        </CartProvider>
       </AuthProvider>
     </LoaderProvider>
     // <SafeAreaView className="flex-1">

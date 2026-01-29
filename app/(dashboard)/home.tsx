@@ -1,7 +1,8 @@
 import { useAuth } from "@/hooks/useAuth";
+import { useCart } from "@/hooks/useCart";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import { Alert, Image, Pressable, ScrollView, Text, View } from "react-native";
 
 const palette = {
   background: "#fbf7f2",
@@ -92,15 +93,15 @@ const tastingExperiences = [
 
 const guestStories = [
   {
-    name: "Selene Park",
+    name: "Olivia Chen",
     title: "Food Stylist",
     quote:
       "SweetZone turns sourcing into storytelling. Their Midnight Noir flight is now my client welcome ritual.",
     avatar:
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=400&q=80",
+      "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    name: "Hassan Idris",
+    name: "David Lin",
     title: "Boutique Hotelier",
     quote:
       "The Cellar Delivery program keeps every petit four impeccable from atelier to suite turn-down.",
@@ -112,10 +113,26 @@ const guestStories = [
 const Home = () => {
   const { user } = useAuth();
   const router = useRouter();
+  const { addToCart } = useCart();
   const firstName =
     user?.displayName?.split(" ")[0] ||
     user?.email?.split("@")[0] ||
     "Chocolate Lover";
+
+  const handleCollectionAdd = (collection: Collection) => {
+    const numericPrice = Number(collection.price.replace(/[^0-9.]/g, "")) || 0;
+    addToCart({
+      name: collection.title,
+      description: collection.description,
+      price: numericPrice,
+      image: collection.image,
+    });
+
+    Alert.alert("Added to cart", `${collection.title} is ready in your cart.`, [
+      { text: "Keep browsing", style: "cancel" },
+      { text: "Go to cart", onPress: () => router.push("/(dashboard)/cart") },
+    ]);
+  };
 
   return (
     <ScrollView
@@ -198,7 +215,11 @@ const Home = () => {
           contentContainerStyle={{ gap: 16 }}
         >
           {curatedCollections.map((collection) => (
-            <CollectionCard key={collection.title} item={collection} />
+            <CollectionCard
+              key={collection.title}
+              item={collection}
+              onAdd={handleCollectionAdd}
+            />
           ))}
         </ScrollView>
       </View>
@@ -230,55 +251,7 @@ const Home = () => {
           ))}
         </View>
       </View>
-
-      <View className="mt-12 px-6">
-        <View className="rounded-3xl bg-[#1f130c] p-6">
-          <Text className="text-xs uppercase tracking-[0.3em] text-[#d8bda1]">
-            Cold-chain Luxury
-          </Text>
-          <Text className="mt-3 text-2xl font-semibold text-white">
-            Cellar delivery membership
-          </Text>
-          <Text className="mt-3 text-base text-[#f3dfc8]">
-            Temperature-controlled logistics, early dessert drops, and
-            personalized tasting calls keep your chocolate rituals effortless.
-          </Text>
-          <View className="mt-4 flex-row gap-3">
-            <View className="flex-1 rounded-2xl bg-[#d6b28c]/20 p-4">
-              <Text className="text-3xl font-bold text-white">48h</Text>
-              <Text className="mt-1 text-xs uppercase tracking-wide text-[#f3dfc8]">
-                coast-to-coast delivery
-              </Text>
-            </View>
-            <View className="flex-1 rounded-2xl bg-[#f4e4d4]/10 p-4">
-              <Text className="text-3xl font-bold text-white">+6</Text>
-              <Text className="mt-1 text-xs uppercase tracking-wide text-[#f3dfc8]">
-                private releases
-              </Text>
-            </View>
-          </View>
-          <Pressable className="mt-5 rounded-2xl bg-white py-3">
-            <Text className="text-center text-base font-semibold text-[#2f1408]">
-              Join the cellar
-            </Text>
-          </Pressable>
-        </View>
-      </View>
-
-      <View className="mt-12 px-6">
-        <Text className="text-sm uppercase tracking-[0.4em] text-[#a6683f]">
-          Experiences
-        </Text>
-        <Text className="mt-2 text-3xl font-bold text-[#2b140a]">
-          Tastings & rituals
-        </Text>
-        <View className="mt-6 gap-4">
-          {tastingExperiences.map((experience) => (
-            <ExperienceCard key={experience.title} experience={experience} />
-          ))}
-        </View>
-      </View>
-
+      
       <View className="mt-12 px-6">
         <Text className="text-sm uppercase tracking-[0.4em] text-[#a6683f]">
           Guest Stories
@@ -318,7 +291,7 @@ const Home = () => {
 
 type Collection = (typeof curatedCollections)[number];
 
-const CollectionCard = ({ item }: { item: Collection }) => {
+const CollectionCard = ({ item, onAdd }: { item: Collection; onAdd: (item: Collection) => void }) => {
   return (
     <View className="w-64 rounded-3xl bg-white p-4 shadow-lg">
       <View className="overflow-hidden rounded-2xl">
@@ -342,7 +315,10 @@ const CollectionCard = ({ item }: { item: Collection }) => {
       <Text className="mt-2 text-sm leading-5 text-[#4a2d1b]">
         {item.description}
       </Text>
-      <Pressable className="mt-4 rounded-2xl border border-[#d6b28c] py-2">
+      <Pressable
+        className="mt-4 rounded-2xl border border-[#d6b28c] py-2"
+        onPress={() => onAdd(item)}
+      >
         <Text className="text-center text-sm font-semibold text-[#7b3c1d]">
           Add to cart
         </Text>
