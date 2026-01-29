@@ -19,13 +19,13 @@ const chocolateCatalog = [
       {
         name: "Cacao Chip Snap",
         description: "72% cacao dough, smoked salt, and burnt sugar chips.",
-        price: 18,
+        price: 900,
         image: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       },
       {
         name: "White Velvet Bite",
         description: "White chocolate base studded with caramelized hazelnuts.",
-        price: 16,
+        price: 1600,
         image: "https://images.unsplash.com/photo-1619149651177-b09092806f1a?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       }
     ]
@@ -38,13 +38,13 @@ const chocolateCatalog = [
       {
         name: "Mocha Mousse Cake",
         description: "Espresso jaconde, amber caramel, and cocoa mirror glaze.",
-        price: 42,
+        price: 4200,
         image: "https://plus.unsplash.com/premium_photo-1723618822165-0b13c0471fc4?q=80&w=708&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       },
       {
         name: "Rosewood Gateau",
         description: "Light brown sugar sponge layered with rose ganache.",
-        price: 38,
+        price: 1500,
         image: "https://plus.unsplash.com/premium_photo-1713920190025-79fb720f3ee1?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       }
     ]
@@ -57,13 +57,13 @@ const chocolateCatalog = [
       {
         name: "Hazelnut Praline",
         description: " 72% dark chocolate with crushed caramelized hazelnuts.",
-        price: 14,
+        price: 1400,
         image: "https://images.unsplash.com/photo-1618320362989-d8a9eb2a1e52?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       },
       {
         name: "Ivory Pistachio",
         description: "White chocolate with roasted pistachios and rose petal.",
-        price: 16,
+        price: 1600,
         image: "https://plus.unsplash.com/premium_photo-1673138930008-64cdecb37a95?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       }
     ]
@@ -76,13 +76,13 @@ const chocolateCatalog = [
       {
         name: "Spiced Sipping Chocolate",
         description: "Spiced dark sipping chocolate with smoked chili oil.",
-        price: 12,
+        price: 1200,
         image: "https://images.unsplash.com/photo-1577805947697-89e18249d767?q=80&w=698&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       },
       {
         name: "Cacao Cold Brew",
         description: "Nitro-infused cacao tea with Ethiopian coffee concentrate.",
-        price: 10,
+        price: 1000,
         image: "https://images.unsplash.com/photo-1517578239113-b03992dcdd25?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       }
     ]
@@ -95,13 +95,13 @@ const chocolateCatalog = [
       {
         name: "Lavender Honey",
         description: "Milk chocolate ganache infused with lavender nectar.",
-        price: 24,
+        price: 2400,
         image: "https://images.unsplash.com/photo-1706147601212-9c6ac9bfff5e?q=80&w=1073&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D0"
       },
       {
         name: "Yuzu Cacao",
         description: "Dark ganache with candied yuzu and cacao fruit jelly.",
-        price: 26,
+        price: 2000,
         image: "https://plus.unsplash.com/premium_photo-1667031519185-3dad7d8931cd?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       }
     ]
@@ -147,7 +147,7 @@ const Categories = () => {
                     <Text className="text-lg font-semibold text-[#1f130c]">{item.name}</Text>
                     <Text className="text-sm text-[#4a2d1b]">{item.description}</Text>
                     <View className="mt-2 flex-row items-center justify-between">
-                      <Text className="text-base font-semibold text-[#7b3c1d]">${item.price.toFixed(2)}</Text>
+                      <Text className="text-base font-semibold text-[#7b3c1d]">Rs-{item.price.toFixed(2)}</Text>
                       <Pressable
                         className="rounded-2xl bg-[#1f130c] px-4 py-2"
                         onPress={() => handleAddToCart(item.name)}

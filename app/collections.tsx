@@ -16,7 +16,7 @@ const seasonalCollections = [
     title: "Velvet Truffle Studio",
     description: "Espresso-infused ganache rolled in vanilla bean cocoa dust.",
     tastingNotes: "Notes of espresso crema, smoked sea salt, and cacao nib crunch",
-    price: 32,
+    price: 1500,
     size: "6-piece atelier box",
     status: "Limited",
     image:
@@ -27,7 +27,7 @@ const seasonalCollections = [
     title: "Amber Caramel Atelier",
     description: "Four-layer praline with pecan gianduja and amber caramel.",
     tastingNotes: "Brown butter brittle, toasted pecan, Madagascar vanilla",
-    price: 28,
+    price: 1200,
     size: "5-piece slab set",
     status: "Bestseller",
     image:
@@ -38,7 +38,7 @@ const seasonalCollections = [
     title: "Berry-cassis-flight",
     description: "72% cacao bars paired with blackberry balsamic reduction.",
     tastingNotes: "Blackberry jam, cassis, balsamic caramel",
-    price: 36,
+    price: 2600,
     size: "3-bar tasting",
     status: "Chef's pick",
     image:
@@ -49,7 +49,7 @@ const seasonalCollections = [
     title: "Blondies",
     description: "White chocolate fudge rippled with rosewater cremeux.",
     tastingNotes: "Turkish delight, cardamom milk, wildflower honey",
-    price: 30,
+    price: 1000,
     size: "9-piece tasting tile",
     status: "New",
     image:
@@ -60,7 +60,7 @@ const seasonalCollections = [
     title: "Cocoa Nectar Orbit",
     description: "Domed bonbons with orange blossom caramel core.",
     tastingNotes: "Citrus oil, buckwheat honey, cacao fruit",
-    price: 34,
+    price: 1400,
     size: "8-piece galaxy set",
     status: "Seasonal",
     image:
@@ -71,7 +71,7 @@ const seasonalCollections = [
     title: "Hazelnut Crown Gateau",
     description: "Mini cake topped with praline shards and bronze cocoa butter.",
     tastingNotes: "Gianduja, caramelized hazelnut, cacao husk",
-    price: 42,
+    price: 3200,
     size: "2 mini tortes",
     status: "Small batch",
     image:
@@ -110,7 +110,7 @@ const Collections = () => {
             <View className="p-5">
               <View className="flex-row items-center justify-between">
                 <Text className="text-xs uppercase tracking-[0.4em] text-[#a6683f]">{collection.status}</Text>
-                <Text className="text-lg font-semibold text-[#1a120b]">${collection.price.toFixed(2)}</Text>
+                <Text className="text-lg font-semibold text-[#1a120b]">Rs-{collection.price.toFixed(2)}</Text>
               </View>
               <Text className="mt-3 text-2xl font-semibold text-[#1f130c]">{collection.title}</Text>
               <Text className="mt-2 text-base text-[#4a2d1b]">{collection.description}</Text>

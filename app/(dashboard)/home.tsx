@@ -42,7 +42,7 @@ const curatedCollections = [
     description:
       "Espresso-infused ganache, finished with smoked sea salt flakes.",
     tag: "Limited",
-    price: "$32",
+    price: "Rs-1500",
     image:
       "https://images.unsplash.com/photo-1549007994-cb92caebd54b?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
@@ -51,7 +51,7 @@ const curatedCollections = [
     description:
       "Four-layer praline with toasted pecan praline & vanilla bean caramel.",
     tag: "Bestseller",
-    price: "$28",
+    price: "Rs-1200",
     image:
       "https://images.unsplash.com/photo-1565071559227-20ab25b7685e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
@@ -60,7 +60,7 @@ const curatedCollections = [
     description:
       "72% cacao collection paired with blackberry balsamic reduction.",
     tag: "Chef's pick",
-    price: "$36",
+    price: "Rs-2600",
     image:
       "https://images.unsplash.com/photo-1655207454924-be5f412853f2?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
