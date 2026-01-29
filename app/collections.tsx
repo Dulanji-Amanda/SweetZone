@@ -20,7 +20,7 @@ const seasonalCollections = [
     size: "6-piece atelier box",
     status: "Limited",
     image:
-      "https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80"
+      "https://images.unsplash.com/photo-1549007994-cb92caebd54b?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
     id: "amber-caramel",
@@ -31,29 +31,29 @@ const seasonalCollections = [
     size: "5-piece slab set",
     status: "Bestseller",
     image:
-      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80"
+      "https://images.unsplash.com/photo-1565071559227-20ab25b7685e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
     id: "midnight-noir",
-    title: "Midnight Noir Flight",
+    title: "Berry-cassis-flight",
     description: "72% cacao bars paired with blackberry balsamic reduction.",
     tastingNotes: "Blackberry jam, cassis, balsamic caramel",
     price: 36,
     size: "3-bar tasting",
     status: "Chef's pick",
     image:
-      "https://images.unsplash.com/photo-1495147334217-fcb3445babd5?auto=format&fit=crop&w=900&q=80"
+      "https://images.unsplash.com/photo-1655207454924-be5f412853f2?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
     id: "rose-latte",
-    title: "Rose Latte Fudge",
+    title: "Blondies",
     description: "White chocolate fudge rippled with rosewater cremeux.",
     tastingNotes: "Turkish delight, cardamom milk, wildflower honey",
     price: 30,
     size: "9-piece tasting tile",
     status: "New",
     image:
-      "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=900&q=80"
+      "https://images.unsplash.com/photo-1682622110395-145cc13d5346?q=80&w=765&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
     id: "cocoa-nectar",
@@ -75,7 +75,7 @@ const seasonalCollections = [
     size: "2 mini tortes",
     status: "Small batch",
     image:
-      "https://images.unsplash.com/photo-1548943487-a2e4e43b4853?auto=format&fit=crop&w=900&q=80"
+      "https://images.unsplash.com/photo-1624000961428-eeece184988b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   }
 ]
 
