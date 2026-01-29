@@ -54,7 +54,7 @@ const curatedCollections = [
     tag: "Bestseller",
     price: "Rs-1200",
     image:
-      "https://images.unsplash.com/photo-1565071559227-20ab25b7685e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      "https://images.unsplash.com/photo-1565071559227-20ab25b7685e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     title: "Berry-cassis-flight",
@@ -63,7 +63,7 @@ const curatedCollections = [
     tag: "Chef's pick",
     price: "Rs-2600",
     image:
-      "https://images.unsplash.com/photo-1655207454924-be5f412853f2?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      "https://images.unsplash.com/photo-1655207454924-be5f412853f2?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
 ];
 
@@ -191,7 +191,6 @@ const Home = () => {
         </View>
       </View>
 
-      
       <View className="mt-12 px-6">
         <View className="flex-row items-center justify-between">
           <View>
@@ -251,7 +250,7 @@ const Home = () => {
           ))}
         </View>
       </View>
-      
+
       <View className="mt-12 px-6">
         <Text className="text-sm uppercase tracking-[0.4em] text-[#a6683f]">
           Guest Stories
@@ -291,7 +290,13 @@ const Home = () => {
 
 type Collection = (typeof curatedCollections)[number];
 
-const CollectionCard = ({ item, onAdd }: { item: Collection; onAdd: (item: Collection) => void }) => {
+const CollectionCard = ({
+  item,
+  onAdd,
+}: {
+  item: Collection;
+  onAdd: (item: Collection) => void;
+}) => {
   return (
     <View className="w-64 rounded-3xl bg-white p-4 shadow-lg">
       <View className="overflow-hidden rounded-2xl">

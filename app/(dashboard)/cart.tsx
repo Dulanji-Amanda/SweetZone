@@ -40,7 +40,8 @@ type Coordinate = {
 
 const Cart = () => {
   const router = useRouter();
-  const { items, updateQuantity, removeFromCart, subtotal, clearCart } = useCart();
+  const { items, updateQuantity, removeFromCart, subtotal, clearCart } =
+    useCart();
 
   const [mapRegion, setMapRegion] = useState<Region>(defaultRegion);
   const [selectedCoords, setSelectedCoords] = useState<Coordinate | null>(null);
@@ -263,7 +264,9 @@ const Cart = () => {
                   className="absolute right-3 top-3 h-8 w-8 items-center justify-center rounded-full bg-black/5"
                   onPress={() => removeFromCart(item.id)}
                 >
-                  <Text className="text-base font-semibold text-[#7b3c1d]">x</Text>
+                  <Text className="text-base font-semibold text-[#7b3c1d]">
+                    x
+                  </Text>
                 </Pressable>
                 {item.image ? (
                   <Image
@@ -279,13 +282,19 @@ const Cart = () => {
                   </View>
                 )}
                 <View className="ml-4 flex-1 pr-6">
-                  <Text className="text-lg font-semibold text-[#2b140a]">{item.name}</Text>
-                  <Text className="mt-1 text-sm text-[#5c3a23]">{item.description}</Text>
+                  <Text className="text-lg font-semibold text-[#2b140a]">
+                    {item.name}
+                  </Text>
+                  <Text className="mt-1 text-sm text-[#5c3a23]">
+                    {item.description}
+                  </Text>
                   <View className="mt-3 flex-row items-center justify-between">
                     <View className="flex-row items-center gap-3">
                       <Pressable
                         className="h-9 w-9 items-center justify-center rounded-full border border-[#ead7c0]"
-                        onPress={() => handleAdjustQuantity(item.id, -1, item.quantity)}
+                        onPress={() =>
+                          handleAdjustQuantity(item.id, -1, item.quantity)
+                        }
                         disabled={item.quantity === 1}
                       >
                         <Text
@@ -294,12 +303,18 @@ const Cart = () => {
                           -
                         </Text>
                       </Pressable>
-                      <Text className="text-base font-semibold text-[#1f130c]">{item.quantity}</Text>
+                      <Text className="text-base font-semibold text-[#1f130c]">
+                        {item.quantity}
+                      </Text>
                       <Pressable
                         className="h-9 w-9 items-center justify-center rounded-full border border-[#ead7c0]"
-                        onPress={() => handleAdjustQuantity(item.id, 1, item.quantity)}
+                        onPress={() =>
+                          handleAdjustQuantity(item.id, 1, item.quantity)
+                        }
                       >
-                        <Text className="text-lg font-semibold text-[#1f130c]">+</Text>
+                        <Text className="text-lg font-semibold text-[#1f130c]">
+                          +
+                        </Text>
                       </Pressable>
                     </View>
                     <Text className="text-base font-semibold text-[#1f130c]">
@@ -312,7 +327,9 @@ const Cart = () => {
           </View>
         ) : (
           <View className="rounded-3xl border border-dashed border-[#ead7c0] bg-white p-6">
-            <Text className="text-lg font-semibold text-[#2b140a]">Your cart is calm.</Text>
+            <Text className="text-lg font-semibold text-[#2b140a]">
+              Your cart is calm.
+            </Text>
             <Text className="mt-1 text-sm text-[#5c3a23]">
               Tap “Add to cart” on any dessert to curate your tasting flight.
             </Text>
@@ -320,7 +337,9 @@ const Cart = () => {
               className="mt-4 self-start rounded-2xl bg-[#1f130c] px-4 py-2"
               onPress={() => router.push("/collections")}
             >
-              <Text className="text-sm font-semibold text-white">Browse collections</Text>
+              <Text className="text-sm font-semibold text-white">
+                Browse collections
+              </Text>
             </Pressable>
           </View>
         )}
