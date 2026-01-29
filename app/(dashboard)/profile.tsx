@@ -1,5 +1,6 @@
 import { useAuth } from "@/hooks/useAuth";
 import { logout } from "@/services/authService";
+import { useRouter } from "expo-router";
 import { updateEmail, updatePassword, updateProfile } from "firebase/auth";
 import React, { useMemo, useState } from "react";
 import {
@@ -22,6 +23,7 @@ const palette = {
 
 const Profile = () => {
   const { user } = useAuth();
+  const router = useRouter();
   const [displayName, setDisplayName] = useState(user?.displayName ?? "");
   const [email, setEmail] = useState(user?.email ?? "");
   const [newPassword, setNewPassword] = useState("");
@@ -89,6 +91,7 @@ const Profile = () => {
   const handleLogout = async () => {
     try {
       await logout();
+      router.replace("/login");
     } catch (error: any) {
       Alert.alert("Logout failed", error.message ?? "Please try again.");
     }
