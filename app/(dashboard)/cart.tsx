@@ -22,7 +22,7 @@ const palette = {
   border: "#f0dfca",
 };
 
-const shippingFee = 6.5;
+const shippingFee = 100.00;
 
 const formatINR = (value: number) => `Rs-${value.toFixed(2)}`;
 

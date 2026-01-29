@@ -8,12 +8,22 @@ const tabs = [
   { name: "news", title: "Categories", icon: "article" },
   { name: "profile", title: "Profile", icon: "person" },
 ] as const;
+
+const tabPalette = {
+  active: "#d6b28c",
+  inactive: "#7b3c1d",
+};
 // DRY - Don't Repeat Yourself
 const DashboardLayout = () => {
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
+        tabBarActiveTintColor: tabPalette.active,
+        tabBarInactiveTintColor: tabPalette.inactive,
+        tabBarLabelStyle: {
+          fontWeight: "600",
+        },
       }}
       //   tabBar={(prop) => <></>}
     >
