@@ -44,7 +44,7 @@ const curatedCollections = [
     tag: "Limited",
     price: "$32",
     image:
-      "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1549007994-cb92caebd54b?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
     title: "Amber Caramel Atelier",
@@ -53,16 +53,16 @@ const curatedCollections = [
     tag: "Bestseller",
     price: "$28",
     image:
-      "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1565071559227-20ab25b7685e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
-    title: "Midnight Noir Flight",
+    title: "Berry-cassis-flight",
     description:
       "72% cacao collection paired with blackberry balsamic reduction.",
     tag: "Chef's pick",
     price: "$36",
     image:
-      "https://images.unsplash.com/photo-1511376777868-611b54f68947?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1655207454924-be5f412853f2?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
 ];
 
@@ -230,7 +230,7 @@ const Home = () => {
           ))}
         </View>
       </View>
-      
+
       <View className="mt-12 px-6">
         <View className="rounded-3xl bg-[#1f130c] p-6">
           <Text className="text-xs uppercase tracking-[0.3em] text-[#d8bda1]">
