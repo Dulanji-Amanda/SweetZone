@@ -1,4 +1,5 @@
 import * as Location from "expo-location";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
     ActivityIndicator,
@@ -20,28 +21,9 @@ const palette = {
   border: "#f0dfca",
 };
 
-const cartItems = [
-  {
-    id: "1",
-    name: "Amber Caramel Bar",
-    description: "Dark chocolate layered with burnt caramel ribbons.",
-    price: 14,
-    quantity: 1,
-    image:
-      "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    id: "2",
-    name: "Velvet Truffle Box",
-    description: "Assorted ganache truffles dusted in cocoa and rose petal.",
-    price: 28,
-    quantity: 2,
-    image:
-      "https://images.unsplash.com/photo-1481391032119-d89fee407e44?auto=format&fit=crop&w=600&q=80",
-  },
-];
-
 const shippingFee = 6.5;
+
+const formatINR = (value: number) => `Rs-${value.toFixed(2)}`;
 
 const defaultRegion: Region = {
   latitude: 40.7128,
@@ -56,12 +38,21 @@ type Coordinate = {
 };
 
 const Cart = () => {
-  const subtotal = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0,
-  );
-  const total = subtotal + shippingFee;
+  const router = useRouter();
+  const params = useLocalSearchParams<{
+    name?: string;
+    price?: string;
+    description?: string;
+    image?: string;
+  }>();
+  const productName = typeof params.name === "string" ? params.name : "";
+  const productDescription =
+    typeof params.description === "string" ? params.description : "";
+  const productImage =
+    typeof params.image === "string" ? params.image : undefined;
+  const unitPrice = params.price ? Number(params.price) : 0;
 
+  const [quantity, setQuantity] = useState(1);
   const [mapRegion, setMapRegion] = useState<Region>(defaultRegion);
   const [selectedCoords, setSelectedCoords] = useState<Coordinate | null>(null);
   const [selectedAddress, setSelectedAddress] = useState<string>("");
@@ -69,6 +60,15 @@ const Cart = () => {
   const [permissionDenied, setPermissionDenied] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+
+  const hasItem = Boolean(productName && unitPrice > 0);
+  const subtotal = hasItem ? unitPrice * quantity : 0;
+  const deliveryFee = hasItem ? shippingFee : 0;
+  const total = subtotal + deliveryFee;
+
+  useEffect(() => {
+    setQuantity(1);
+  }, [unitPrice, productName]);
 
   useEffect(() => {
     let isMounted = true;
@@ -212,12 +212,24 @@ const Cart = () => {
     }
   };
 
+  const handleAdjustQuantity = (delta: number) => {
+    setQuantity((prev) => Math.max(1, prev + delta));
+  };
+
   const locationSummary = selectedCoords
     ? selectedAddress ||
       `Lat ${selectedCoords.latitude.toFixed(3)}, Lon ${selectedCoords.longitude.toFixed(3)}`
     : "No delivery location selected yet.";
 
   const handlePlaceOrder = () => {
+    if (!hasItem) {
+      Alert.alert(
+        "Add a dessert",
+        "Select an item to purchase before placing an order.",
+      );
+      return;
+    }
+
     if (!selectedCoords) {
       Alert.alert(
         "Add delivery location",
@@ -247,38 +259,81 @@ const Cart = () => {
         </Text>
       </View>
 
-      <View className="mt-8 gap-4 px-6">
-        {cartItems.map((item) => (
+      <View className="mt-8 px-6">
+        {hasItem ? (
           <View
-            key={item.id}
             className="flex-row rounded-3xl bg-white p-4 shadow-md"
             style={{ borderColor: palette.border, borderWidth: 1 }}
           >
-            <Image
-              source={{ uri: item.image }}
-              className="h-24 w-24 rounded-2xl"
-              resizeMode="cover"
-            />
+            {productImage ? (
+              <Image
+                source={{ uri: productImage }}
+                className="h-24 w-24 rounded-2xl"
+                resizeMode="cover"
+              />
+            ) : (
+              <View className="h-24 w-24 items-center justify-center rounded-2xl bg-[#f4e4d4]">
+                <Text className="text-xs uppercase tracking-[0.3em] text-[#7b3c1d]">
+                  Sweet
+                </Text>
+              </View>
+            )}
             <View className="ml-4 flex-1">
               <Text className="text-lg font-semibold text-[#2b140a]">
-                {item.name}
+                {productName}
               </Text>
               <Text className="mt-1 text-sm text-[#5c3a23]">
-                {item.description}
+                {productDescription}
               </Text>
               <View className="mt-3 flex-row items-center justify-between">
-                <Text className="text-base font-semibold text-[#1f130c]">
-                  ${item.price.toFixed(2)}
-                </Text>
-                <View className="rounded-full bg-[#f4e4d4] px-3 py-1">
-                  <Text className="text-xs font-semibold text-[#7b3c1d]">
-                    Qty {item.quantity}
+                <View className="flex-row items-center gap-3">
+                  <Pressable
+                    className="h-9 w-9 items-center justify-center rounded-full border border-[#ead7c0]"
+                    onPress={() => handleAdjustQuantity(-1)}
+                    disabled={quantity === 1}
+                  >
+                    <Text
+                      className={`text-lg font-semibold ${quantity === 1 ? "text-[#c9b6a5]" : "text-[#1f130c]"}`}
+                    >
+                      -
+                    </Text>
+                  </Pressable>
+                  <Text className="text-base font-semibold text-[#1f130c]">
+                    {quantity}
                   </Text>
+                  <Pressable
+                    className="h-9 w-9 items-center justify-center rounded-full border border-[#ead7c0]"
+                    onPress={() => handleAdjustQuantity(1)}
+                  >
+                    <Text className="text-lg font-semibold text-[#1f130c]">
+                      +
+                    </Text>
+                  </Pressable>
                 </View>
+                <Text className="text-base font-semibold text-[#1f130c]">
+                  {formatINR(unitPrice * quantity)}
+                </Text>
               </View>
             </View>
           </View>
-        ))}
+        ) : (
+          <View className="rounded-3xl border border-dashed border-[#ead7c0] bg-white p-6">
+            <Text className="text-lg font-semibold text-[#2b140a]">
+              Your cart is calm.
+            </Text>
+            <Text className="mt-1 text-sm text-[#5c3a23]">
+              Tap “Add to cart” on any dessert to curate your tasting flight.
+            </Text>
+            <Pressable
+              className="mt-4 self-start rounded-2xl bg-[#1f130c] px-4 py-2"
+              onPress={() => router.push("/collections")}
+            >
+              <Text className="text-sm font-semibold text-white">
+                Browse collections
+              </Text>
+            </Pressable>
+          </View>
+        )}
       </View>
 
       <View className="mt-10 px-6">
@@ -363,39 +418,41 @@ const Cart = () => {
         </View>
       </View>
 
-      <View className="mt-10 px-6">
-        <View className="rounded-3xl bg-[#120b07] p-5">
-          <View className="flex-row items-center justify-between">
-            <Text className="text-base text-[#f4e4d4]">Subtotal</Text>
-            <Text className="text-base font-semibold text-white">
-              ${subtotal.toFixed(2)}
-            </Text>
+      {hasItem && (
+        <View className="mt-10 px-6">
+          <View className="rounded-3xl bg-[#120b07] p-5">
+            <View className="flex-row items-center justify-between">
+              <Text className="text-base text-[#f4e4d4]">Subtotal</Text>
+              <Text className="text-base font-semibold text-white">
+                {formatINR(subtotal)}
+              </Text>
+            </View>
+            <View className="mt-3 flex-row items-center justify-between">
+              <Text className="text-base text-[#f4e4d4]">Cellar shipping</Text>
+              <Text className="text-base font-semibold text-white">
+                {formatINR(deliveryFee)}
+              </Text>
+            </View>
+            <View className="mt-4 h-[1px] bg-[#4a2d1b]/30" />
+            <View className="mt-4 flex-row items-center justify-between">
+              <Text className="text-lg font-semibold text-white">
+                Order total
+              </Text>
+              <Text className="text-2xl font-bold text-[#d6b28c]">
+                {formatINR(total)}
+              </Text>
+            </View>
+            <Pressable
+              className="mt-5 rounded-2xl bg-[#d6b28c] py-3"
+              onPress={handlePlaceOrder}
+            >
+              <Text className="text-center text-base font-semibold text-[#2b140a]">
+                Place order
+              </Text>
+            </Pressable>
           </View>
-          <View className="mt-3 flex-row items-center justify-between">
-            <Text className="text-base text-[#f4e4d4]">Cellar shipping</Text>
-            <Text className="text-base font-semibold text-white">
-              ${shippingFee.toFixed(2)}
-            </Text>
-          </View>
-          <View className="mt-4 h-[1px] bg-[#4a2d1b]/30" />
-          <View className="mt-4 flex-row items-center justify-between">
-            <Text className="text-lg font-semibold text-white">
-              Order total
-            </Text>
-            <Text className="text-2xl font-bold text-[#d6b28c]">
-              ${total.toFixed(2)}
-            </Text>
-          </View>
-          <Pressable
-            className="mt-5 rounded-2xl bg-[#d6b28c] py-3"
-            onPress={handlePlaceOrder}
-          >
-            <Text className="text-center text-base font-semibold text-[#2b140a]">
-              Place order
-            </Text>
-          </Pressable>
         </View>
-      </View>
+      )}
     </ScrollView>
   );
 };
