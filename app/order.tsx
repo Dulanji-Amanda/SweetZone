@@ -1,8 +1,16 @@
 import { useCart } from "@/hooks/useCart";
 import { useOrders } from "@/hooks/useOrders";
+import { FontAwesome } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useMemo, useState } from "react";
-import { Alert, Pressable, ScrollView, Text, View } from "react-native";
+import {
+  Alert,
+  Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import MapView, { Marker } from "react-native-maps";
 
 const palette = {
@@ -40,6 +48,10 @@ const Order = () => {
   }>();
   const [selectedPayment, setSelectedPayment] =
     useState<(typeof paymentOptions)[number]["id"]>("cod");
+  const [cardName, setCardName] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardExpiry, setCardExpiry] = useState("");
+  const [cardCvv, setCardCvv] = useState("");
 
   const hasItems = items.length > 0;
   const deliveryFee = hasItems ? shippingFee : 0;
@@ -83,6 +95,18 @@ const Order = () => {
       ? `Lat ${coords.latitude.toFixed(3)}, Lon ${coords.longitude.toFixed(3)}`
       : "Delivery location not set");
 
+  const handleSelectPayment = (
+    optionId: (typeof paymentOptions)[number]["id"],
+  ) => {
+    setSelectedPayment(optionId);
+    if (optionId !== "card") {
+      setCardName("");
+      setCardNumber("");
+      setCardExpiry("");
+      setCardCvv("");
+    }
+  };
+
   const handlePlaceOrder = () => {
     if (!hasItems) {
       Alert.alert(
@@ -90,6 +114,25 @@ const Order = () => {
         "Add a dessert before confirming the order.",
       );
       return;
+    }
+
+    if (selectedPayment === "card") {
+      const cleanedNumber = cardNumber.replace(/\s+/g, "");
+      if (!cardName.trim() || cleanedNumber.length < 12) {
+        Alert.alert(
+          "Add card details",
+          "Enter the cardholder name and a valid card number.",
+        );
+        return;
+      }
+      if (!/^(0[1-9]|1[0-2])\/(\d{2})$/.test(cardExpiry.trim())) {
+        Alert.alert("Expiry required", "Use MM/YY for the expiry date.");
+        return;
+      }
+      if (!/^\d{3}$/.test(cardCvv.trim())) {
+        Alert.alert("CVV required", "CVV must be a 3-digit code.");
+        return;
+      }
     }
 
     const orderItems = items.map((item) => ({ ...item }));
@@ -241,7 +284,7 @@ const Order = () => {
               <Pressable
                 key={option.id}
                 className={`rounded-3xl border px-4 py-4 ${isActive ? "border-[#d6b28c] bg-[#fff7ef]" : "border-[#ead7c0] bg-white"}`}
-                onPress={() => setSelectedPayment(option.id)}
+                onPress={() => handleSelectPayment(option.id)}
               >
                 <View className="flex-row items-center justify-between">
                   <View className="flex-1 pr-4">
@@ -264,6 +307,69 @@ const Order = () => {
             );
           })}
         </View>
+        {selectedPayment === "card" && (
+          <View className="mt-4 rounded-3xl border border-dashed border-[#ead7c0] bg-white p-4">
+            <Text className="text-xs uppercase tracking-[0.3em] text-[#a6683f]">
+              Card details
+            </Text>
+            <View className="mt-3 flex-row items-center gap-4">
+              <View className="flex-row items-center gap-2 rounded-2xl bg-[#fff7ef] px-3 py-1">
+                <FontAwesome name="credit-card" size={18} color="#7b3c1d" />
+                <Text className="text-sm font-semibold text-[#7b3c1d]">
+                  Debit
+                </Text>
+              </View>
+              <View className="flex-row items-center gap-2 rounded-2xl bg-[#fff7ef] px-3 py-1">
+                <FontAwesome name="cc-visa" size={20} color="#1a120b" />
+                <Text className="text-sm font-semibold text-[#1a120b]">
+                  Visa
+                </Text>
+              </View>
+              <View className="flex-row items-center gap-2 rounded-2xl bg-[#fff7ef] px-3 py-1">
+                <FontAwesome name="credit-card-alt" size={18} color="#a6683f" />
+                <Text className="text-sm font-semibold text-[#a6683f]">
+                  Credit
+                </Text>
+              </View>
+            </View>
+            <TextInput
+              value={cardName}
+              onChangeText={setCardName}
+              placeholder="Name on card"
+              placeholderTextColor="#b79378"
+              className="mt-3 rounded-2xl border border-[#ead7c0] px-4 py-3 text-base text-[#1f130c]"
+            />
+            <TextInput
+              value={cardNumber}
+              onChangeText={setCardNumber}
+              placeholder="Card number"
+              keyboardType="numeric"
+              maxLength={19}
+              placeholderTextColor="#b79378"
+              className="mt-3 rounded-2xl border border-[#ead7c0] px-4 py-3 text-base text-[#1f130c]"
+            />
+            <View className="mt-3 flex-row gap-3">
+              <TextInput
+                value={cardExpiry}
+                onChangeText={setCardExpiry}
+                placeholder="MM/YY"
+                maxLength={5}
+                placeholderTextColor="#b79378"
+                className="flex-1 rounded-2xl border border-[#ead7c0] px-4 py-3 text-base text-[#1f130c]"
+              />
+              <TextInput
+                value={cardCvv}
+                onChangeText={setCardCvv}
+                placeholder="CVV"
+                secureTextEntry
+                maxLength={3}
+                keyboardType="numeric"
+                placeholderTextColor="#b79378"
+                className="flex-1 rounded-2xl border border-[#ead7c0] px-4 py-3 text-base text-[#1f130c]"
+              />
+            </View>
+          </View>
+        )}
       </View>
 
       <View className="mt-10 px-6">
