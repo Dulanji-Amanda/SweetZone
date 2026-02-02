@@ -107,7 +107,7 @@ const Order = () => {
     Alert.alert("Order placed", "Your SweetZone box is being prepared.", [
       {
         text: "View orders",
-        onPress: () => router.replace("/(dashboard)/orders"),
+        onPress: () => router.replace("/orders"),
       },
       {
         text: "Keep browsing",

@@ -262,7 +262,7 @@ const Cart = () => {
               accessibilityLabel="View past orders"
               className="h-12 w-12 items-center justify-center rounded-full bg-white"
               style={{ borderColor: palette.border, borderWidth: 1 }}
-              onPress={() => router.push("/(dashboard)/orders")}
+              onPress={() => router.push("/orders")}
             >
               <MaterialIcons name="receipt-long" size={24} color="#7b3c1d" />
             </Pressable>

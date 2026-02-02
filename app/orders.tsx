@@ -40,7 +40,14 @@ const Orders = () => {
       showsVerticalScrollIndicator={false}
     >
       <View className="px-6 pt-12">
-        <Text className="text-sm uppercase tracking-[0.4em] text-[#a6683f]">
+        <Pressable
+          onPress={() => router.back()}
+          className="self-start rounded-full bg-white px-4 py-2"
+          style={{ borderColor: palette.border, borderWidth: 1 }}
+        >
+          <Text className="text-sm font-semibold text-[#7b3c1d]">Back</Text>
+        </Pressable>
+        <Text className="mt-4 text-sm uppercase tracking-[0.4em] text-[#a6683f]">
           Orders
         </Text>
         <Text className="mt-2 text-3xl font-bold text-[#2b140a]">
