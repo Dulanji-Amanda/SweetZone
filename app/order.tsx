@@ -1,4 +1,5 @@
 import { useCart } from "@/hooks/useCart";
+import { useOrders } from "@/hooks/useOrders";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useMemo, useState } from "react";
 import { Alert, Pressable, ScrollView, Text, View } from "react-native";
@@ -31,6 +32,7 @@ const paymentOptions = [
 const Order = () => {
   const router = useRouter();
   const { items, subtotal, clearCart } = useCart();
+  const { addOrder } = useOrders();
   const params = useLocalSearchParams<{
     address?: string | string[];
     latitude?: string | string[];
@@ -90,10 +92,25 @@ const Order = () => {
       return;
     }
 
+    const orderItems = items.map((item) => ({ ...item }));
+    addOrder({
+      items: orderItems,
+      subtotal,
+      deliveryFee,
+      total,
+      paymentMethod: selectedPayment,
+      address: locationSummary,
+      coords: coords ? { ...coords } : undefined,
+    });
+
     clearCart();
     Alert.alert("Order placed", "Your SweetZone box is being prepared.", [
       {
-        text: "Track order",
+        text: "View orders",
+        onPress: () => router.replace("/(dashboard)/orders"),
+      },
+      {
+        text: "Keep browsing",
         onPress: () => router.replace("/(dashboard)/home"),
       },
     ]);
@@ -204,7 +221,7 @@ const Order = () => {
           )}
           <Pressable
             className="mt-4 self-start rounded-2xl border border-[#ead7c0] px-4 py-2"
-            onPress={() => router.back()}
+            onPress={() => router.push("/(dashboard)/cart")}
           >
             <Text className="text-sm font-semibold text-[#1f130c]">
               Adjust in cart

@@ -5,6 +5,7 @@ import React from "react";
 const tabs = [
   { name: "home", title: "Home", icon: "home" },
   { name: "cart", title: "Cart", icon: "shopping-cart" },
+  { name: "orders", title: "Orders", icon: "receipt" },
   { name: "news", title: "Categories", icon: "article" },
   { name: "profile", title: "Profile", icon: "person" },
 ] as const;

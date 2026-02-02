@@ -1,12 +1,11 @@
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { LoaderProvider } from "@/context/LoaderContext";
+import { OrdersProvider } from "@/context/OrderContext";
 import { Slot } from "expo-router";
 import React from "react";
 import { View } from "react-native";
-import {
-  useSafeAreaInsets
-} from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 // SafeAreaView from react-native is deprecated
 // react-native-safe-area-context is the recommended alternative
@@ -21,10 +20,12 @@ const RootLayout = () => {
     <LoaderProvider>
       <AuthProvider>
         <CartProvider>
-          <View className="flex-1" style={{ marginTop: insets.top }}>
-            {/* Slot renders the currently active screen */}
-            <Slot />
-          </View>
+          <OrdersProvider>
+            <View className="flex-1" style={{ marginTop: insets.top }}>
+              {/* Slot renders the currently active screen */}
+              <Slot />
+            </View>
+          </OrdersProvider>
         </CartProvider>
       </AuthProvider>
     </LoaderProvider>
