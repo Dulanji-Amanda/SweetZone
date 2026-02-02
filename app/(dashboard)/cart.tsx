@@ -1,4 +1,5 @@
 import { useCart } from "@/hooks/useCart";
+import { MaterialIcons } from "@expo/vector-icons";
 import * as Location from "expo-location";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -247,12 +248,29 @@ const Cart = () => {
       showsVerticalScrollIndicator={false}
     >
       <View className="px-6 pt-12">
-        <Text className="text-sm uppercase tracking-[0.4em] text-[#a6683f]">
-          Cart
-        </Text>
-        <Text className="mt-2 text-3xl font-bold text-[#2b140a]">
-          Refine your cocoa ritual
-        </Text>
+        <View className="flex-row items-center justify-between">
+          <View>
+            <Text className="text-sm uppercase tracking-[0.4em] text-[#a6683f]">
+              Cart
+            </Text>
+            <Text className="mt-2 text-3xl font-bold text-[#2b140a]">
+              Tasting flight
+            </Text>
+          </View>
+          <View className="items-center gap-1">
+            <Pressable
+              accessibilityLabel="View past orders"
+              className="h-12 w-12 items-center justify-center rounded-full bg-white"
+              style={{ borderColor: palette.border, borderWidth: 1 }}
+              onPress={() => router.push("/(dashboard)/orders")}
+            >
+              <MaterialIcons name="receipt-long" size={24} color="#7b3c1d" />
+            </Pressable>
+            <Text className="text-xs font-semibold uppercase tracking-[0.01em] text-[#7b3c1d]">
+              View past orders
+            </Text>
+          </View>
+        </View>
       </View>
 
       <View className="mt-8 px-6">
