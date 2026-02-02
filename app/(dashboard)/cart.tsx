@@ -3,14 +3,14 @@ import * as Location from "expo-location";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
-    ActivityIndicator,
-    Alert,
-    Image,
-    Pressable,
-    ScrollView,
-    Text,
-    TextInput,
-    View,
+  ActivityIndicator,
+  Alert,
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
 import MapView, { LongPressEvent, Marker, Region } from "react-native-maps";
 
@@ -22,7 +22,7 @@ const palette = {
   border: "#f0dfca",
 };
 
-const shippingFee = 100.00;
+const shippingFee = 100.0;
 
 const formatINR = (value: number) => `Rs-${value.toFixed(2)}`;
 
@@ -40,8 +40,7 @@ type Coordinate = {
 
 const Cart = () => {
   const router = useRouter();
-  const { items, updateQuantity, removeFromCart, subtotal, clearCart } =
-    useCart();
+  const { items, updateQuantity, removeFromCart, subtotal } = useCart();
 
   const [mapRegion, setMapRegion] = useState<Region>(defaultRegion);
   const [selectedCoords, setSelectedCoords] = useState<Coordinate | null>(null);
@@ -208,7 +207,7 @@ const Cart = () => {
       `Lat ${selectedCoords.latitude.toFixed(3)}, Lon ${selectedCoords.longitude.toFixed(3)}`
     : "No delivery location selected yet.";
 
-  const handlePlaceOrder = () => {
+  const handleCheckout = () => {
     if (!hasItems) {
       Alert.alert(
         "Add a dessert",
@@ -225,12 +224,17 @@ const Cart = () => {
       return;
     }
 
-    Alert.alert("Order confirmed", "Your SweetZone creations are on the way.", [
-      {
-        text: "Done",
-        onPress: () => clearCart(),
+    router.push({
+      pathname: "/order",
+      params: {
+        address: selectedAddress || locationSummary,
+        latitude: selectedCoords.latitude.toString(),
+        longitude: selectedCoords.longitude.toString(),
+        subtotal: subtotal.toString(),
+        deliveryFee: deliveryFee.toString(),
+        total: total.toString(),
       },
-    ]);
+    });
   };
 
   return (
@@ -453,10 +457,10 @@ const Cart = () => {
             </View>
             <Pressable
               className="mt-5 rounded-2xl bg-[#d6b28c] py-3"
-              onPress={handlePlaceOrder}
+              onPress={handleCheckout}
             >
               <Text className="text-center text-base font-semibold text-[#2b140a]">
-                Place order
+                Checkout
               </Text>
             </Pressable>
           </View>
