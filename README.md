@@ -1,50 +1,98 @@
-# Welcome to your Expo app 👋
+# SweetZone Mobile App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+SweetZone is an Expo Router + React Native storefront that showcases curated collections, handles carts and orders, and syncs auth + data through Firebase. The repo is optimized for development inside Expo Go, custom dev builds, and web previews via React Native Web.
 
-## Get started
+## Tech Stack
 
-1. Install dependencies
+- Expo SDK 54 with Expo Router file-based navigation
+- React Native 0.81 / React 19
+- Firebase (Auth + Firestore) for persistent data
+- NativeWind + Tailwind CSS for styling
+- React Navigation bottom tabs for dashboard flows
+
+## Features
+
+- Email/password auth with persistent Firebase sessions and guarded dashboard routes
+- Product collections, category filters, and promo tiles rendered from Firestore-friendly data models
+- Cart context with quantity syncing, contextual CTA badges, and haptic tab feedback
+- Order placement + lightweight order tracking backed by Firestore writes and optimistic UI states
+- Parallax hero sections, themed typography, and NativeWind-powered dark/light styling tokens
+- Loader overlay + toast-ready context to centralize asynchronous UX feedback
+
+## Screenshots
+
+These live previews help designers/devs stay aligned. Replace or add more PNGs inside `assets/images/` and reference them here.
+
+![Sign in page](/assets/images/login.jpeg)
+
+![Sign Up page](/assets/images/signup.jpeg)
+
+![Home page](/assets/images/home.jpeg)
+
+![Collection](/assets/images/collection.jpeg)
+
+![Order](/assets/images/order.jpeg)
+
+![PastOrder](/assets/images/pastorders.jpeg)
+
+![Profile](/assets/images/profile.jpeg)
+
+
+## Prerequisites
+
+- Node.js 18+ and npm 10+ (check with `node -v` / `npm -v`)
+- Latest Android Studio (emulator) and/or Xcode Command Line Tools if you plan to run native simulators
+- Expo Go app on your device for quick QR testing (optional but recommended)
+
+## Setup
+
+1. **Install dependencies**
 
    ```bash
    npm install
    ```
 
-2. Start the app
+2. **Configure Firebase**
 
-   ```bash
-   npx expo start
-   ```
+   The default config lives in `services/firebase.ts`. Update the `firebaseConfig` object with your own project credentials or load them from secure storage before shipping. Re-run Metro if you change these values.
 
-In the output, you'll find options to open the app in a
+3. **(Optional) VS Code Tailwind IntelliSense**
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   Install the official Tailwind CSS extension and ensure `tailwind.config.js` is in the workspace root for class autocomplete inside `*.tsx` files.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Run Instructions
 
-## Get a fresh project
+| Target | Command | Notes |
+| --- | --- | --- |
+| Metro + QR | `npm run start` | Opens Expo CLI UI with QR + tunnel options |
+| Android emulator/device | `npm run android` | Requires an emulator booted or physical device with USB debugging |
+| iOS simulator/device | `npm run ios` | Runs only on macOS with Xcode |
+| Web preview | `npm run web` | Uses React Native Web + Vite dev server via Expo |
 
-When you're ready, run:
+After Metro boots, press `a`, `i`, or `w` in the terminal to launch the desired target, or scan the QR code with Expo Go.
 
-```bash
-npm run reset-project
+## Useful Scripts
+
+- `npm run lint` – run Expo ESLint rules across the project
+- `npm run reset-project` – restore the starter template (destructive; copies files from `app-example`)
+
+## Project Structure
+
+```
+app/
+  index.tsx              # Landing screen / entry route
+  (auth)/*               # Expo Router group for login/register flows
+  (dashboard)/*          # Authenticated tabs (home, cart, orders, profile)
+components/              # Shared UI primitives (tabs, parallax scroll, themed views)
+context/                 # React contexts: Auth, Cart, Loader, Order
+services/firebase.ts     # Firebase bootstrap (Auth + Firestore)
+constants/theme.ts       # Design tokens consumed by NativeWind
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Troubleshooting
 
-## Learn more
+- Clear Expo + Metro caches when dependencies change: `npx expo start --clear`.
+- If Hermes or Reanimated build issues appear, reinstall pods / rebuild dev clients after upgrading Expo SDKs.
+- Firebase web keys are public identifiers, but keep write-access rules tight in the Firebase console before production.
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Happy building!
