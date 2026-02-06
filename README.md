@@ -35,9 +35,6 @@ These live previews help designers/devs stay aligned. Replace or add more PNGs i
 
 ![PastOrder](/assets/images/pastorders.jpeg)
 
-![Profile](/assets/images/profile.jpeg)
-
-
 ## Prerequisites
 
 - Node.js 18+ and npm 10+ (check with `node -v` / `npm -v`)
